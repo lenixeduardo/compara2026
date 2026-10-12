@@ -1,0 +1,16 @@
+import {useState} from 'react';
+import {ocorrencias,type Situacao} from '../data/ocorrencias';
+const filtros=['Todos','Decisão contra Flávio','Medida sobre terceiros','Pedido de apuração'] as const;
+export default function ElectoralRecords(){
+ const [filtro,setFiltro]=useState<'Todos'|Situacao>('Todos');
+ const lista=ocorrencias.filter(item=>filtro==='Todos'||item.situacao===filtro);
+ return <section id="ocorrencias" className="electoral-records scroll-mt-24" aria-labelledby="records-title">
+ <header className="records-heading"><img src="/icons/documento-vermelho.svg" width={38} height={38} alt=""/><div><p className="eyebrow">ACOMPANHAMENTO ELEITORAL</p><h2 id="records-title">Flávio Bolsonaro: decisões e denúncias recentes</h2></div></header>
+ <p className="records-lead">Registros localizados com decisões ou notícias entre <strong>4 e 11 de outubro de 2026</strong>. Cada caso informa a conduta alegada, o vínculo com o candidato e o estágio conhecido.</p>
+ <div className="records-scope"><strong>Como ler os registros</strong><p>Multa ou remoção de propaganda não equivale a condenação criminal. Denúncia e pedido de investigação não comprovam autoria. As fontes consultadas não permitem afirmar condenação criminal eleitoral nesses casos nem que esta lista seja exaustiva.</p><p>Data de consulta: 11/10/2026, horário de Brasília. As datas abaixo distinguem decisão ou notícia da data dos fatos. Este é um retrato das fontes nessa data, sem atualização automática.</p></div>
+ <a className="connections-related" href="#vinculos-documentados">Ver histórico: Jair, Abin e Banco Master <img src="/icons/seta-direita-vermelho.svg" width={16} height={16} alt=""/></a>
+ <div className="records-filters" aria-label="Filtrar por estágio">{filtros.map(value=><button key={value} aria-pressed={value===filtro} onClick={()=>setFiltro(value)}>{value} <span>{value==='Todos'?ocorrencias.length:ocorrencias.filter(item=>item.situacao===value).length}</span></button>)}</div>
+ <p className="records-count" role="status">{lista.length} registro{lista.length!==1?'s':''} exibido{lista.length!==1?'s':''}</p>
+ <div className="records-grid">{lista.map(item=><article key={item.id} className="record-card"><div className="record-meta"><time dateTime={item.data}>{item.dataLabel}</time><span className={`record-status ${item.situacao==='Decisão contra Flávio'?'record-decision':item.situacao==='Medida sobre terceiros'?'record-third-party':'record-allegation'}`}>{item.situacao}</span></div><h3>{item.titulo}</h3><p>{item.resumo}</p><dl><div><dt>Data dos fatos</dt><dd>{item.fatos}</dd></div><div><dt>Vínculo e atribuição</dt><dd>{item.vinculo}</dd></div></dl><div className="record-limit"><strong>O que está estabelecido</strong><p>{item.limite}</p></div><details className="record-detail"><summary>Defesa e contexto processual</summary><p>{item.defesa}</p>{item.processo&&<p><strong>Processo:</strong> {item.processo}</p>}</details><div className="record-sources"><strong>Fontes consultadas</strong>{item.fontes.map(source=><a href={source.url} key={source.url} target="_blank" rel="noreferrer">{source.nome}<img src="/icons/seta-direita-preto.svg" width={14} height={14} alt=""/></a>)}</div></article>)}</div>
+ </section>;
+}
