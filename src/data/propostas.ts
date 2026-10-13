@@ -523,7 +523,7 @@ export const categorias: Categoria[] = [
           origem: "Plano de governo (TSE)",
           refs: ["emRouanet"],
           alerta:
-            "Item apurado por apenas um veículo e não confirmado pelos demais levantamentos consultados. Confira diretamente no plano registrado no TSE antes de usar como fato.",
+            "Esta informação foi atribuída ao plano por um único veículo; as demais fontes listadas não oferecem confirmação independente.",
         },
       ],
     },

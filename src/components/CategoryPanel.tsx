@@ -85,9 +85,9 @@ function PropostaCard({ p, id, query, anchor }: { p: Proposta; id: CandidateId; 
 function Coluna({ id, cat, query }: { id: CandidateId; cat: Categoria; query: string }) {
   const c = candidatos[id];
   return <section className={`candidate-column candidate-${id}`}>
-    <header className="candidate-profile"><div className={`candidate-portrait portrait-${id}`} role="img" aria-label={`Retrato ilustrado de ${c.nome}`}/><div><h3>{c.nome}</h3><p>Resumo da proposta disponível<br className="desktop-break"/> na fonte oficial.</p><div className="candidate-accent"/></div></header>
+    <header className="candidate-profile"><div className={`candidate-portrait portrait-${id}`} role="img" aria-label={`Retrato ilustrado de ${c.nome}`}/><div><h3>{c.nome}</h3><p>Propostas e declarações<br className="desktop-break"/> com fontes identificadas.</p><div className="candidate-accent"/></div></header>
     <details className="proposal-disclosure" open={query.trim() ? true : undefined}>
-      <summary><span className="document-icon"><FileText aria-hidden="true"/></span><span><strong>{cat.nome}</strong><span>Resumo da proposta disponível na fonte oficial{ id === 'lula' ? ' do candidato' : ''}.</span></span><ChevronRight aria-hidden="true"/></summary>
+      <summary><span className="document-icon"><FileText aria-hidden="true"/></span><span><strong>{cat.nome}</strong><span>Consulte os registros e suas fontes.</span></span><ChevronRight aria-hidden="true"/></summary>
       <ul className="proposal-list">{cat.propostas[id].map((p,index)=><PropostaCard key={p.titulo} p={p} id={id} query={query} anchor={`proposta-${cat.id}-${id}-${index}`}/>)}</ul>
     </details>
   </section>;

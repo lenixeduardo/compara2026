@@ -39,9 +39,8 @@ export default function Bibliografia() {
           <span className="text-slate-400">{listaFontes.length} fontes</span>
         </h2>
         <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-600">
-          Toda informação do site remete a pelo menos uma destas referências. Os dois documentos-base são os planos de
-          governo registrados na Justiça Eleitoral; o restante são reportagens e levantamentos setoriais que leram,
-          cotejaram e checaram esses documentos. Clique no título de uma referência para ir ao assunto no Compara. Em “Assuntos relacionados”, escolha a proposta específica. O botão “Abrir fonte original” abre o documento externo.
+          As referências incluem planos de governo, documentos oficiais, reportagens e levantamentos setoriais.
+          Clique em uma referência para ver os assuntos relacionados ou abra a fonte original para consultar o conteúdo completo.
         </p>
 
         <div className="mt-6 flex flex-wrap gap-2">

@@ -21,8 +21,8 @@ export default function Footer() {
                 contexto, isso está sinalizado em um bloco amarelo de <em>ressalva</em>.
               </li>
               <li>
-                <strong className="text-white">As lacunas também são informação.</strong> O bloco “o que os planos não
-                dizem” registra silêncios relevantes dos documentos — eles dizem tanto quanto as promessas.
+                <strong className="text-white">O que não está detalhado.</strong> A seção “O que os planos não dizem”
+                identifica temas não especificados nos documentos consultados, sem presumir a posição do candidato.
               </li>
               <li>
                 <strong className="text-white">Textos são sínteses, não citações.</strong> Resumimos trechos extensos.
@@ -68,8 +68,7 @@ export default function Footer() {
         </div>
 
         <p className="mt-8 text-xs text-slate-500">
-          Comparador de Propostas · conteúdo educativo · baseado no material fornecido, com referências de agosto a outubro de
-          2026.
+          Compara2026 · material informativo · referências e recortes temporais identificados em cada seção.
         </p>
       </div>
     </footer>

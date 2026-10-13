@@ -271,7 +271,7 @@ export default function App() {
         </main>
       </div>
 
-      <section id="metodologia" className="methodology"><details><summary><Settings aria-hidden="true"/><span>Como funciona a comparação?</span><ChevronDown aria-hidden="true"/></summary><p className="method-note">O comparativo reúne o conteúdo do material fornecido. As referências ainda não foram verificadas independentemente. Consulte os documentos originais antes de formar sua opinião.</p><Overview onSelect={selecionar}/></details></section>
+      <section id="metodologia" className="methodology"><details><summary><Settings aria-hidden="true"/><span>Como funciona a comparação?</span><ChevronDown aria-hidden="true"/></summary><p className="method-note">Este comparativo sintetiza documentos públicos e reportagens. O conteúdo não passou por verificação independente integral; confira as referências e os períodos indicados em cada registro.</p><Overview onSelect={selecionar}/></details></section>
       </div>
       {sections.slice(1).map(item => <div key={item.id} id={`section-panel-${item.id}`} role="tabpanel" aria-labelledby={`section-tab-${item.id}`} hidden={section !== item.id}>
         {item.id === "falas-recentes" && <RecentStatements />}
