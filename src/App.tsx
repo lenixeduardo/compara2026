@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useState, type MouseEvent } from "react";
+import { useEffect, useLayoutEffect, useState, type MouseEvent } from "react";
 import { categorias } from "./data/propostas";
 import { categoryForHash } from "./data/referenceTargets";
 import { cn } from "./utils/cn";
@@ -12,7 +12,7 @@ import LegislativeRecord from "./components/LegislativeRecord";
 import DocumentedConnections from "./components/DocumentedConnections";
 import Overview from "./components/Overview";
 import TopicIcon from "./components/TopicIcon";
-import { Settings, ChevronDown, Search, ArrowLeft, ArrowRight } from "lucide-react";
+import { Settings, ChevronDown, ArrowLeft, ArrowRight } from "lucide-react";
 import CategoryPanel from "./components/CategoryPanel";
 import Bibliografia from "./components/Bibliografia";
 import Footer from "./components/Footer";
@@ -44,7 +44,6 @@ export default function App() {
     const category = categoryForHash(hash);
     if (category) {
       setAtiva(category);
-      setQuery("");
     }
     setNavRequest(previous => ({ hash, revision: previous.revision + 1 }));
   };
@@ -98,29 +97,7 @@ export default function App() {
   };
 
   const [ativa, setAtiva] = useState<string>(() => categoryForHash(window.location.hash) ?? "educacao");
-  const [query, setQuery] = useState("");
-
-  const buscando = query.trim().length > 1;
-
-  const resultados = useMemo(() => {
-    if (!buscando) return [];
-    const q = query.trim().toLowerCase();
-    return categorias.filter((c) => {
-      const blob = [
-        c.nome,
-        c.resumo,
-        c.perguntaChave,
-        ...c.propostas.lula.flatMap((p) => [p.titulo, p.texto]),
-        ...c.propostas.flavio.flatMap((p) => [p.titulo, p.texto]),
-      ]
-        .join(" ")
-        .toLowerCase();
-      return blob.includes(q);
-    });
-  }, [query, buscando]);
-
   const selecionar = (id: string) => {
-    setQuery("");
     setAtiva(id);
     chooseSection("comparador");
     requestAnimationFrame(() => {
@@ -164,14 +141,11 @@ export default function App() {
                 {categorias.map((c) => (
                   <button
                     key={c.id}
-                    onClick={() => {
-                      setQuery("");
-                      setAtiva(c.id);
-                    }}
-                    aria-pressed={!buscando && ativa === c.id}
-                    className={cn("topic-tab", !buscando && ativa === c.id && "is-active")}
+                    onClick={() => setAtiva(c.id)}
+                    aria-pressed={ativa === c.id}
+                    className={cn("topic-tab", ativa === c.id && "is-active")}
                   >
-                    <TopicIcon id={c.id} variant={!buscando && ativa === c.id ? "branco" : "preto"}/>
+                    <TopicIcon id={c.id} variant={ativa === c.id ? "branco" : "preto"}/>
                     {c.nome}
                   </button>
                 ))}
@@ -182,56 +156,41 @@ export default function App() {
               >
                 <img src="/icons/documento-preto.svg" width={16} height={16} alt="" className="mr-1 inline-block"/> Fontes
               </a>
-              <div className="desktop-topic-search relative hidden shrink-0 sm:block">
-                <input
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  aria-label="Buscar propostas por tema"
-                  placeholder="Buscar tema..."
-                  className="w-52 rounded-xl border border-slate-200 bg-slate-50 py-2 pl-9 pr-3 text-sm outline-none transition focus:border-slate-400 focus:bg-white focus:ring-2 focus:ring-slate-200"
-                />
-                <Search size={16} aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+              <div className="desktop-topic-search hidden shrink-0 md:block">
+                <label htmlFor="tema-desktop" className="mb-1.5 block text-xs font-semibold text-slate-600">Buscar tema</label>
+                <div className="relative">
+                  <select
+                    id="tema-desktop"
+                    value={ativa}
+                    onChange={(event) => selecionar(event.target.value)}
+                    className="topic-select w-60 cursor-pointer appearance-none rounded-xl border border-slate-300 bg-white py-3 pl-3 pr-10 text-sm font-semibold text-slate-800 transition focus:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-100"
+                  >
+                    {categorias.map((c) => <option key={c.id} value={c.id}>{c.nome}</option>)}
+                  </select>
+                  <ChevronDown size={17} aria-hidden="true" className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                </div>
               </div>
             </div>
-            <div className="mobile-topic-search pb-3 sm:hidden">
-              <input
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                aria-label="Buscar propostas por tema"
-                placeholder="Buscar tema (ex.: creche, imposto, Amazônia)"
-                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-sm outline-none focus:border-slate-400 focus:bg-white"
-              />
+            <div className="mobile-topic-search pb-3 md:hidden">
+              <label htmlFor="tema-mobile" className="mb-2 block text-xs font-semibold text-slate-600">Buscar tema</label>
+              <div className="relative">
+                <select
+                  id="tema-mobile"
+                  value={ativa}
+                  onChange={(event) => selecionar(event.target.value)}
+                  className="topic-select w-full cursor-pointer appearance-none rounded-xl border border-slate-300 bg-white px-4 py-3 pr-10 text-sm font-semibold text-slate-800 transition focus:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-100"
+                >
+                  {categorias.map((c) => <option key={c.id} value={c.id}>{c.nome}</option>)}
+                </select>
+                <ChevronDown size={17} aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-500" />
+              </div>
             </div>
           </div>
         </div>
 
         <main className="mx-auto max-w-6xl px-4 py-10 comparador-main">
-          {buscando ? (
-            <div className="space-y-16">
-              <div className="flex flex-wrap items-center gap-3">
-                <h2 className="text-lg font-bold text-slate-900">
-                  {resultados.length} área{resultados.length === 1 ? "" : "s"} com "{query.trim()}"
-                </h2>
-                <button
-                  onClick={() => setQuery("")}
-                  className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-500 hover:bg-slate-100"
-                >
-                  limpar busca
-                </button>
-              </div>
-              {resultados.length === 0 ? (
-                <p className="rounded-xl border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-slate-500">
-                  Nenhuma proposta encontrada. Tente termos como "SUS", "creche", "imposto", "escola" ou "Amazônia".
-                </p>
-              ) : (
-                resultados.map((c) => <CategoryPanel key={c.id} cat={c} query={query} />)
-              )}
-            </div>
-          ) : (
-            <CategoryPanel cat={catAtiva} query="" />
-          )}
+          <CategoryPanel cat={catAtiva} query="" />
 
-          {!buscando && (
             <nav className="mt-12 flex items-center justify-between gap-3 border-t border-slate-200 pt-6">
               {(() => {
                 const i = categorias.findIndex((c) => c.id === catAtiva.id);
@@ -267,7 +226,6 @@ export default function App() {
                 );
               })()}
             </nav>
-          )}
         </main>
       </div>
 
