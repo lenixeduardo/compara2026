@@ -424,14 +424,7 @@ export const categorias: Categoria[] = [
       "Aplicativos: regulação com cobertura previdenciária (Lula) × redução de custo e flexibilidade (Flávio).",
       "Benefícios: valorização real do mínimo (Lula) × correção do BPC e da Previdência só pela inflação (Flávio).",
     ],
-    lacunas: [
-      {
-        candidato: "lula",
-        texto:
-          "O programa não detalha como seria financiada a ampliação da cobertura previdenciária dos trabalhadores de plataforma nem os impactos de longo prazo sobre o equilíbrio do sistema.",
-        refs: ["pleno"],
-      },
-    ],
+    lacunas: [],
   },
   {
     id: "cultura",
@@ -656,12 +649,6 @@ export const categorias: Categoria[] = [
         candidato: "flavio",
         texto:
           "O plano não detalha como pretende zerar o desmatamento ilegal até 2029, nem quais atribuições dos órgãos ambientais seriam fundidas ou extintas.",
-        refs: ["folhaAmbiente"],
-      },
-      {
-        candidato: "lula",
-        texto:
-          "Nem o plano de Lula nem o de Flávio mencionam o El Niño, fenômeno que pode ter impacto inédito no país em 2027.",
         refs: ["folhaAmbiente"],
       },
     ],
@@ -979,12 +966,6 @@ export const categorias: Categoria[] = [
       "Currículo: diversidade e direitos humanos (Lula) × educação 'livre de doutrinação' (Flávio).",
     ],
     lacunas: [
-      {
-        candidato: "lula",
-        texto:
-          "Há divergência entre levantamentos: a BBC registra o compromisso de 'combater homofobia' no programa, enquanto o Portal Verdade afirma que o candidato 'não menciona diretamente temas como transfobia, homofobia ou LGBTfobia'. As duas leituras estão reproduzidas aqui.",
-        refs: ["bbcPropostas", "verdadeLgbt"],
-      },
       {
         candidato: "flavio",
         texto:
